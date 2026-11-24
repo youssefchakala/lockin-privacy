@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Add me on LockIn</title>
+<style>
+  :root { --bg: #FBF6EE; --card: #FFFFFF; --text: #2D2A26; --muted: #726B61; --accent: #3DB37C; --accent-pressed: #2E9466; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 420px; margin: 0 auto; padding: 40px 22px; text-align: center; }
+  h1 { font-size: 26px; margin: 8px 0 4px; }
+  .muted { color: var(--muted); }
+  .card { background: var(--card); border: 1px solid #EDE5D8; border-radius: 22px; padding: 22px; margin-top: 22px; }
+  .code { font-size: 34px; font-weight: 700; letter-spacing: 6px; margin: 6px 0 0; }
+  a.button { display: block; margin-top: 14px; padding: 14px; border-radius: 16px; font-weight: 700; text-decoration: none; }
+  a.primary { background: var(--accent); color: #fff; }
+  a.primary:active { background: var(--accent-pressed); }
+  a.ghost { background: #F3EDE3; color: var(--text); }
+  .lock { font-size: 44px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="lock">🔒🌱</div>
+  <h1 id="title">A friend wants to focus with you</h1>
+  <p class="muted" id="intro">LockIn blocks Reels, Shorts and TikTok while you study, and grows a garden with your focus.</p>
+  <div class="card">
+    <div class="muted" id="codeLabel">Their friend code</div>
+    <div class="code" id="code">······</div>
+    <a class="button primary" id="open" href="#">Open in LockIn</a>
+    <a class="button ghost" id="play" href="https://play.google.com/store/apps/details?id=com.tekbound.lockin">Get LockIn on Google Play</a>
+    <p class="muted" id="hint" style="font-size:14px;margin-top:14px">New to LockIn? Install it, then open it: the code is filled in for you.</p>
+  </div>
+</main>
+<script>
+  // The code comes from the link: only 6 capital letters or digits are accepted, and it's only ever shown as text.
+  var raw = (new URLSearchParams(location.search).get('c') || '').toUpperCase();
+  var code = /^[A-Z0-9]{6}$/.test(raw) ? raw : null;
+  var fr = (navigator.language || '').toLowerCase().indexOf('fr') === 0;
+  if (fr) {
+    document.documentElement.lang = 'fr';
+    document.title = 'Ajoute-moi sur LockIn';
+    document.getElementById('title').textContent = 'Un ami veut se concentrer avec toi';
+    document.getElementById('intro').textContent = 'LockIn bloque les Reels, les Shorts et TikTok pendant que tu révises, et fait pousser un jardin avec ton focus.';
+    document.getElementById('codeLabel').textContent = 'Son code ami';
+    document.getElementById('open').textContent = 'Ouvrir dans LockIn';
+    document.getElementById('play').textContent = 'Télécharger LockIn sur Google Play';
+    document.getElementById('hint').textContent = 'Nouveau sur LockIn ? Installe-le puis ouvre-le : le code est déjà rempli.';
+  }
+  var play = 'https://play.google.com/store/apps/details?id=com.tekbound.lockin';
+  if (code) {
+    document.getElementById('code').textContent = code;
+    // Through Play's install referrer, a fresh install still gets the code.
+    play += '&referrer=' + encodeURIComponent('friend=' + code);
+    // Chrome on Android: opens LockIn if it's installed, otherwise goes to Play.
+    document.getElementById('open').href = 'intent://add/' + code + '#Intent;scheme=lockin;S.browser_fallback_url=' + encodeURIComponent(play) + ';end';
+  } else {
+    document.getElementById('open').style.display = 'none';
+    document.getElementById('code').textContent = '—';
+  }
+  document.getElementById('play').href = play;
+</script>
+</body>
+</html>
