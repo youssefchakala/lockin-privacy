@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get LockIn: block Reels &amp; Shorts while you study</title>
+<meta name="description" content="LockIn blocks Reels, Shorts and the TikTok feed while you study. Your messages still work. Free on Google Play.">
+<meta property="og:title" content="LockIn: block Reels & Shorts while you study">
+<meta property="og:description" content="Free on Google Play. Your messages still work.">
+<style>
+  :root { --bg: #FBF6EE; --card: #FFFFFF; --text: #2D2A26; --muted: #726B61; --accent: #3DB37C; --accent-pressed: #2E9466; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 420px; margin: 0 auto; padding: 44px 22px 32px; text-align: center; }
+  .icon { width: 88px; height: 88px; border-radius: 22px; background: var(--accent); margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+  h1 { font-size: 28px; margin: 18px 0 6px; line-height: 1.2; }
+  .muted { color: var(--muted); }
+  ul { list-style: none; padding: 0; margin: 20px 0 0; text-align: left; }
+  li { background: var(--card); border: 1px solid #EDE5D8; border-radius: 16px; padding: 12px 14px; margin-top: 8px; }
+  a.button { display: block; margin-top: 22px; padding: 17px; border-radius: 18px; font-weight: 700; font-size: 18px; text-decoration: none; background: var(--accent); color: #fff; }
+  a.button:active { background: var(--accent-pressed); }
+  a.small { display: inline-block; margin-top: 14px; color: var(--muted); font-size: 15px; }
+  #inapp { display: none; margin-top: 18px; background: #FFF4DC; border: 1px solid #F4D58F; border-radius: 16px; padding: 12px 14px; font-size: 15px; text-align: left; }
+  #inapp a { color: var(--text); font-weight: 700; }
+  footer { margin-top: 28px; font-size: 13px; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <div class="icon" aria-hidden="true">
+    <svg width="46" height="46" viewBox="0 0 24 24" fill="#fff"><path d="M7 10V7a5 5 0 0 1 10 0v3h.5A1.5 1.5 0 0 1 19 11.5v8a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-8A1.5 1.5 0 0 1 6.5 10H7Zm2 0h6V7a3 3 0 0 0-6 0v3Zm3 4a1.6 1.6 0 1 0 0 3.2A1.6 1.6 0 0 0 12 14Z"/></svg>
+  </div>
+  <h1 id="title">Study without the scroll</h1>
+  <p class="muted" id="intro">LockIn blocks Reels, Shorts and the TikTok feed while you focus. Your messages still work.</p>
+  <ul>
+    <li id="f1">📵 Reels, Shorts and TikTok off during a session</li>
+    <li id="f2">💬 Chats and calls keep working</li>
+    <li id="f3">🌱 Every minute of focus grows your garden</li>
+  </ul>
+  <a class="button" id="get" href="https://play.google.com/store/apps/details?id=com.tekbound.lockin">Get LockIn free on Google Play</a>
+  <a class="small" id="web" href="https://play.google.com/store/apps/details?id=com.tekbound.lockin">Button not working? Open the Play page</a>
+  <div id="inapp"><span id="inappText">Nothing opens? Tap ⋮ at the top right, then "Open in Chrome".</span> <a id="chrome" href="#">Open in Chrome</a></div>
+  <footer class="muted"><a href="./" id="privacy">Privacy policy</a> · Android only</footer>
+</main>
+<script>
+  // Where the visit came from (?s=ig_story) goes to Play as utm_content, so the Play Console shows which link brought installs.
+  var s = (new URLSearchParams(location.search).get('s') || 'link').toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 30) || 'link';
+  var ref = 'utm_source=instagram&utm_medium=social&utm_content=' + s;
+  var web = 'https://play.google.com/store/apps/details?id=com.tekbound.lockin&referrer=' + encodeURIComponent(ref);
+  var ua = navigator.userAgent || '';
+  var android = /Android/i.test(ua);
+  var inApp = /Instagram|FBAN|FBAV|FB_IAB|TikTok|musical_ly|Snapchat/i.test(ua);
+
+  document.getElementById('web').href = web;
+  // On Android, go straight to the Play Store app (in-app browsers often block the Play web page's hand-off).
+  document.getElementById('get').href = android
+    ? 'intent://details?id=com.tekbound.lockin&referrer=' + encodeURIComponent(ref) + '#Intent;scheme=market;package=com.android.vending;S.browser_fallback_url=' + encodeURIComponent(web) + ';end'
+    : web;
+
+  if (android && inApp) {
+    document.getElementById('inapp').style.display = 'block';
+    var here = location.href.replace(/^https?:\/\//, '');
+    document.getElementById('chrome').href = 'intent://' + here + '#Intent;scheme=https;package=com.android.chrome;end';
+  }
+
+  if ((navigator.language || '').toLowerCase().indexOf('fr') === 0) {
+    document.documentElement.lang = 'fr';
+    document.title = 'LockIn : bloque les Reels et les Shorts pendant tes révisions';
+    document.getElementById('title').textContent = 'Révise sans scroller';
+    document.getElementById('intro').textContent = 'LockIn bloque les Reels, les Shorts et TikTok pendant que tu te concentres. Tes messages marchent toujours.';
+    document.getElementById('f1').textContent = '📵 Reels, Shorts et TikTok coupés pendant la session';
+    document.getElementById('f2').textContent = '💬 Les discussions et les appels marchent toujours';
+    document.getElementById('f3').textContent = '🌱 Chaque minute de focus fait pousser ton jardin';
+    document.getElementById('get').textContent = 'Télécharger LockIn gratuitement';
+    document.getElementById('web').textContent = 'Le bouton ne marche pas ? Ouvrir la page Play';
+    document.getElementById('inappText').textContent = 'Rien ne s’ouvre ? Appuie sur ⋮ en haut à droite, puis « Ouvrir dans Chrome ».';
+    document.getElementById('chrome').textContent = 'Ouvrir dans Chrome';
+    document.getElementById('privacy').textContent = 'Politique de confidentialité';
+    document.querySelector('footer').lastChild.textContent = ' · Android uniquement';
+  }
+</script>
+</body>
+</html>
